@@ -3,7 +3,7 @@ package com.company;
 //elab-source:TestSKE.java
 import java.util.Scanner;
 import java.util.Random;
-public class TestSKE {
+public class SKERestaurant {
 
     public static void menu(){
 
