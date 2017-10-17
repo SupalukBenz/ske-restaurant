@@ -1,7 +1,11 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
     public class SKERestaurant {
+
         static Scanner scan = new Scanner(System.in);
         static int pizzQtotal, chicQtotal, totalPrice = 0;
         static int coke, coffee, greenTea, orange = 0;
