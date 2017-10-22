@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class OrderTaker {
     public static void main(String[] args) throws IOException {
+
         RestaurantManager.init();
 
         Scanner scanner = new Scanner(System.in);
