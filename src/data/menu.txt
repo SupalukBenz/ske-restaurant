@@ -2,6 +2,7 @@ Cheese Pizza;220
 Pizza with mushroom;250
 Salad, small;30
 Hamburger;120
+Sandwich;90
 Hot dog;55
 # Coke;20
 Water;10

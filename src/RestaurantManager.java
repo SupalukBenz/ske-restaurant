@@ -15,7 +15,7 @@ public class RestaurantManager {
     private static ArrayList<String> menu = new ArrayList<String>();
     private static ArrayList<Double> priceArr = new ArrayList<Double>();
     static void init() throws FileNotFoundException {
-        String filename = "data/menu.txt";
+        String filename = "src/data/menu.txt";
         try {
             setMenu(filename);
 
@@ -31,7 +31,6 @@ public class RestaurantManager {
     public static double[] getPrices() throws FileNotFoundException {
         return price;
     }
-
 
     public static void recordOrder ( int orderNumber, int[] order, double total) throws IOException{
 
@@ -50,10 +49,6 @@ public class RestaurantManager {
         }
         print.println("-------------------------------------------------------------");
 
-//        print.println("Order number: " + orderNumber);
-//        for(String str : order){
-//            System.out.println(str);
-//        }
         print.printf("|%s %30s| %10.1f\t\t |%n" , "Total Price" , " " , total);
         print.println("-------------------------------------------------------------");
         print.println("Some test output");
