@@ -1,3 +1,11 @@
+/**
+ * RestaurantManager class is manager of OrderTaker class
+ * read menu from file and collect in menu and price array
+ * save record order
+ *
+ * @author Supaluk Jaroensuk
+ */
+
 package src.restaurant;
 
 import java.io.*;
@@ -14,7 +22,11 @@ public class RestaurantManager {
     final static String FILE_MENU = "src/data/menu.txt";
     final static String FILE_LOG = "src/data/salesLog.log";
 
-
+    /**
+     * Set a menu read from a menu file and add to the arraylist
+     * @param filename is a filename of menu file
+     * @throws FileNotFoundException in case system not found a menu file
+     */
     static void setMenu(String filename) throws FileNotFoundException{
 
         InputStream inputStream = loader.getResourceAsStream(filename);
@@ -37,10 +49,16 @@ public class RestaurantManager {
         reader.close();
     }
 
+    /**
+     * @return array of menu list
+     */
     public static String[] getMenuItems(){
         return menu.toArray(new String[menu.size()]);
     }
 
+    /**
+     * @return array of menu's price
+     */
     public static double[] getPrices(){
         double[] price = new double[prices.size()];
         int count = 0;
@@ -52,6 +70,14 @@ public class RestaurantManager {
         return price;
     }
 
+    /**
+     * Record a order. It appends the order to salesLog.log
+     * @param orderNumber is a order number
+     * @param order is a array of menu's quantity
+     * @param total is a price of that menu
+     * @throws IOException is exception thrown when there has an I/O error
+     *
+     */
     public static void recordOrder(int orderNumber , int[] order , double total) throws IOException{
         FileWriter fw = new FileWriter(FILE_LOG, true);
         PrintWriter printOut = null;
@@ -75,7 +101,10 @@ public class RestaurantManager {
         printOut.close();
     }
 
-
+    /**
+     * Get the latest number order from log file
+     * @return latest order number
+     */
     static int getLatestOrderNumber()  {
         int orderNumber = 1;
         InputStream in = loader.getResourceAsStream(FILE_LOG);
@@ -100,7 +129,10 @@ public class RestaurantManager {
 
     }
 
-
+    /**
+     * Add menu in array
+     * @throws IOException is exception thrown when there has an I/O error
+     */
     static void addMenu(String fileName)throws IOException{
 
         System.out.println("  Add menu ");
@@ -139,6 +171,11 @@ public class RestaurantManager {
 
     }
 
+    /**
+     * Manage menu
+     * manager method has add menu method
+     * @throws IOException is exception thrown when there has an I/O error
+     */
     public static void manager()throws IOException{
         String input = "";
         while(!input.equals("x")) {

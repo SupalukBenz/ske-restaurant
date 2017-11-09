@@ -1,3 +1,10 @@
+/**
+ * OrderTaker class get the menu data by calling
+ * method from RestaurantManager
+ *
+ * @author Supaluk Jaroensuk
+ */
+
 package src.restaurant;
 
 import java.io.FileNotFoundException;
@@ -20,6 +27,11 @@ public class OrderTaker {
 
     }
 
+    /**
+     * Show menu from file
+     * and function in ske-restaurant
+     * @throws FileNotFoundException is in case system not found a menu file
+     */
     public static void printMenu()throws FileNotFoundException{
 
         System.out.println("╔--------------------------------------------╗");
@@ -40,6 +52,11 @@ public class OrderTaker {
 
     }
 
+    /**
+     * Input menu number and quantity
+     * add to array
+     * @throws IOException
+     */
     public static void command() throws IOException{
         order = new int[menu.length];
         String choice = "";
@@ -78,6 +95,10 @@ public class OrderTaker {
         receipt();
     }
 
+    /**
+     * Print total menu and total price
+     * @param total is total price
+     */
     public static void printTotal(double total){
         System.out.printf("+-------------%s---------------+-----%s-----+------%s------+%n", "Menu", "QTY", "Price");
         for(int i = 0 ; i < order.length ; i++){
@@ -88,6 +109,9 @@ public class OrderTaker {
         System.out.println("------------------------------------------------------------------");
     }
 
+    /**
+     * Edit menu's quantity
+     */
     public static void editMenu(){
         System.out.println("Edit menu number : ");
         int number = scan.nextInt();
@@ -103,6 +127,9 @@ public class OrderTaker {
 
     }
 
+    /**
+     * Cancel menu in your order
+     */
     public static void cancelMenu(){
         System.out.println("Cancel menu number : ");
         int number = scan.nextInt();
@@ -112,6 +139,9 @@ public class OrderTaker {
         System.out.println("Cancel " + menu[number - 1]);
     }
 
+    /**
+     * Print receipt
+     */
     public static void receipt(){
         System.out.println("--------------------------------------------------");
         System.out.printf("%36s%n" ,"╭  ⓈⓀⒺ ʀestaurant ✘  ╯");
@@ -131,6 +161,10 @@ public class OrderTaker {
 
     }
 
+    /**
+     * Calculate all price in your order
+     * @return total price
+     */
     public static double totalPrice(){
         double total = 0;
         for(int i = 0 ; i < order.length ; i++){
