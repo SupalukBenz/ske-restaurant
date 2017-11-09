@@ -1,9 +1,11 @@
-Cheese Pizza;220
-Pizza with mushroom;250
-Salad, small;30
-Hamburger;120
-Sandwich;90
-Hot dog;55
-# Coke;20
-Water;10
-Ice Tea;20
+Jamón Ibérico;300
+Churros Con;120
+Paella;200
+Croquatas;85
+Patatas Bravas;150
+Gazpacho;100
+Empanadas;35
+#Coke;20
+Water;25
+Lamonade;100.0
+Coffee;55.0
