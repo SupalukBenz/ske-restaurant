@@ -12,7 +12,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class RestaurantManager {
 
     static ArrayList<String> menu = new ArrayList<String>();
