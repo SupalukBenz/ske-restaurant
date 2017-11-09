@@ -110,7 +110,6 @@ public class RestaurantManager {
         if(in == null) {
             orderNumber = 1;
         }else{
-
             Scanner s = new Scanner(in);
             while(s.hasNextLine()){
                 String line = s.nextLine();
