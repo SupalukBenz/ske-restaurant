@@ -11,7 +11,6 @@ public class OrderTaker {
     static double[] prices;
     static int[] order;
 
-
     public static void main(String[] args) throws IOException {
         RestaurantManager.init();
         menu = RestaurantManager.getMenuItems();

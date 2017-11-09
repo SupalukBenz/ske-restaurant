@@ -55,7 +55,6 @@ public class RestaurantManager {
     public static void recordOrder(int orderNumber , int[] order , double total) throws IOException{
         FileWriter fw = new FileWriter(FILE_LOG, true);
         PrintWriter printOut = null;
-
         try {
             printOut = new PrintWriter(fw);
         }catch (Exception e){
