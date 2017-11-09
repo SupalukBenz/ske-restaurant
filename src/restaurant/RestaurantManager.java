@@ -62,7 +62,6 @@ public class RestaurantManager {
             return;
         }
 
-
         printOut.println("Order number : " + orderNumber);
         printOut.printf("Qty %-30s %10s %10s%n" , "Menu" , "Price" , "Total");
         for(int i = 0 ; i < order.length ; i++){

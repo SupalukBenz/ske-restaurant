@@ -7,4 +7,3 @@ Gazpacho;100
 Empanadas;35
 #Coke;20
 Water;25
-Lamonade;100.0
