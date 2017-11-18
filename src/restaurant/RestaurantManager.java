@@ -1,3 +1,10 @@
+package src.restaurant;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * RestaurantManager class is manager of OrderTaker class
  * read menu from file and collect in menu and price array
@@ -6,107 +13,74 @@
  * @author Supaluk Jaroensuk
  */
 
-package src.restaurant;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class RestaurantManager {
 
-    static ArrayList<String> menu = new ArrayList<String>();
-    static ArrayList<Double> prices = new ArrayList<Double>();
-    static ClassLoader loader = RestaurantManager.class.getClassLoader();
-    static Scanner scan = new Scanner(System.in);
-    final static String FILE_MENU = "src/data/menu.txt";
-    final static String FILE_LOG = "src/data/salesLog.log";
+    private static String[] menu;
+    private static double[] price;
+    static ClassLoader classLoader = RestaurantManager.class.getClassLoader();
+    final static String fileMenu = "src/data/menu.txt";
+    final static String fileLog = "src/data/salesLog.txt";
 
-    /**
-     * Set a menu read from a menu file and add to the arraylist
-     * @param filename is a filename of menu file
-     * @throws FileNotFoundException in case system not found a menu file
-     */
-    static void setMenu(String filename) throws FileNotFoundException{
 
-        InputStream inputStream = loader.getResourceAsStream(filename);
-
-        if(inputStream == null){
-            System.out.println("Could not access file " + filename);
-            return;
-        }
-
-        Scanner reader = new Scanner(inputStream);
-
-        while(reader.hasNextLine()){
-            String line = reader.nextLine().trim();
-
-            if(line.charAt(0) != '#'){
-                menu.add(line.split(";")[0]);
-                prices.add(Double.parseDouble(line.split(";")[1]));
-            }
-        }
-        reader.close();
-    }
-
-    /**
-     * @return array of menu list
-     */
     public static String[] getMenuItems(){
-        return menu.toArray(new String[menu.size()]);
+        init();
+        return menu;
     }
 
-    /**
-     * @return array of menu's price
-     */
-    public static double[] getPrices(){
-        double[] price = new double[prices.size()];
-        int count = 0;
-        for(double i : prices){
-            price[count] = i;
-            count++;
-        }
-
+    public static double[] getPrice(){
+        init();
         return price;
     }
-
     /**
-     * Record a order. It appends the order to salesLog.log
-     * @param orderNumber is a order number
-     * @param order is a array of menu's quantity
-     * @param total is a price of that menu
-     * @throws IOException is exception thrown when there has an I/O error
-     *
+     * Set a menu read from a menu file and add to the array of menu and price.
+     * @param fileMenu is a filename of menu file.
      */
-    public static void recordOrder(int orderNumber , int[] order , double total) throws IOException{
-        FileWriter fw = new FileWriter(FILE_LOG, true);
-        PrintWriter printOut = null;
-        try {
-            printOut = new PrintWriter(fw);
-        }catch (Exception e){
-            System.out.println("Couldn't open output file " + FILE_LOG);
-            return;
-        }
+    static void setMenu(String fileMenu) {
 
-        printOut.println("Order number : " + orderNumber);
-        printOut.printf("Qty %-30s %10s %10s%n" , "Menu" , "Price" , "Total");
-        for(int i = 0 ; i < order.length ; i++){
-            if(order[i] != 0){
-                printOut.printf("(%d) %-30s %10.2f  %10.2f Bath%n" , order[i] , menu.get(i) , prices.get(i) , order[i]*prices.get(i));
+        BufferedReader br = null;
+        List<String> split = new ArrayList<String>();
+        int count =0;
+        int loopMenu = 0;
+        try {
+
+            InputStream inputStream = classLoader.getResourceAsStream(fileMenu);
+
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while((line = br.readLine()) != null){
+                if(line.charAt(0) != '#') {
+                   split.add(line);
+                    count++;
+                }
+            }
+
+            menu = new String[count];
+            price = new double[count];
+
+            for(int i = 0 ; i < split.size(); i++){
+                String[] str = split.get(i).split(";");
+                price[loopMenu] = Double.parseDouble(str[1]);
+                menu[loopMenu] = str[0];
+                loopMenu++;
+            }
+
+        }catch (IOException e){
+            System.out.println("Can't access file.");
+
+        }finally {
+            try {
+               if(br != null) br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        printOut.printf("%36s Subtotal  %10.2f%n" , "" , total);
-        printOut.printf("Time : %tT%n" , System.currentTimeMillis());
-        printOut.println();
-        printOut.close();
+
+
     }
 
-    /**
-     * Get the latest number order from log file
-     * @return latest order number
-     */
     static int getLatestOrderNumber()  {
         int orderNumber = 1;
-        InputStream in = loader.getResourceAsStream(FILE_LOG);
+        InputStream in = classLoader.getResourceAsStream(fileLog);
         if(in == null) {
             orderNumber = 1;
         }else{
@@ -128,71 +102,36 @@ public class RestaurantManager {
     }
 
     /**
-     * Add menu in array
-     * @throws IOException is exception thrown when there has an I/O error
+     * Record a order. It appends the order to salesLog.txt
+     * @param orderNumber is the latest order number.
+     * @param order is a array of menu's quantity.
+     * @param total is a order's total price.
      */
-    static void addMenu(String fileName)throws IOException{
-
-        System.out.println("  Add menu ");
-
-        System.out.print("menu title : ");
-        String menuTitle = scan.next();
-
-        System.out.print("menu price : ");
-        double menuPrice = scan.nextDouble();
-
-        FileWriter fw = new FileWriter(FILE_MENU,true);
-
-        PrintWriter pw = null;
-
-        for(String menuList : menu){
-            if(menuTitle.equals(menuList)){
-                System.out.println("Menu is already exit");
-                return;
-            }
-        }
+    public static void recordOrder(int orderNumber , int[] order , double total) {
+        OutputStream os = null;
         try {
-            pw = new PrintWriter(fw);
+            os = new FileOutputStream(fileLog , true);
         }catch (Exception e){
-            System.out.println("Couldn't open " + fileName);
-            return;
+            System.out.println("Can't access to " + fileLog);
         }
-        pw.print(menuTitle + ";" + menuPrice);
-        pw.println();
-        menu.add(menuTitle);
-        prices.add(menuPrice);
-        pw.close();
-    }
-
-    static void init()throws FileNotFoundException{
-        setMenu(FILE_MENU);
-
-    }
-
-    /**
-     * Manage menu
-     * manager method has add menu method
-     * @throws IOException is exception thrown when there has an I/O error
-     */
-    public static void manager()throws IOException{
-        String input = "";
-        while(!input.equals("x")) {
-
-            System.out.println("[a] Add menu");
-            System.out.println("[x] EXIT");
-
-            System.out.println("Enter your choice : ");
-            input = scan.next();
-
-            switch (input) {
-                case "a":
-                    addMenu(FILE_MENU);
-                    break;
-                case "x":
-                    return;
-
+        PrintStream printOut = new PrintStream(os);
+        printOut.println("Order number : " + orderNumber);
+        printOut.printf("Qty %-30s %10s %10s%n" , "Menu" , "Price" , "Total");
+        for(int i = 0 ; i < order.length ; i++){
+            if(order[i] != 0){
+                printOut.printf("(%d) %-30s %10.2f  %10.2f Bath%n" , order[i] , menu[i] , price[i] , order[i]*price[i]);
             }
         }
+        printOut.printf("%36s Subtotal  %10.2f Bath%n" , "" , total);
+        printOut.printf("Time : %tT%n" , System.currentTimeMillis());
+        printOut.close();
+
+    }
+
+
+
+    public static void init(){
+        setMenu(fileMenu);
     }
 
 
