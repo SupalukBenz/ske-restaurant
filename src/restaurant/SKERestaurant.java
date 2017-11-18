@@ -99,7 +99,7 @@ public class SKERestaurant {
         System.out.printf("|%-6s%tc%-17s|%n" ,"time:" , date , " ");
         System.out.printf("|%-36s%15s|%n" , "Cashier : SUPALUK" , " ");
         System.out.printf("|%-51s|%n" , "");
-        System.out.printf("|%10s %d%38s|%n" , "Order: " , latestNumber , " ");
+        System.out.printf("|%10s %3d%37s|%n" , "Order: " , latestNumber , " ");
         System.out.printf("|%-51s|%n" , "");
         System.out.printf("|  %-24s %5s %10s%8s|%n" , "menu" , "qty" , "price" , " ");
         for(int i = 0 ; i < order.length ; i++) {
