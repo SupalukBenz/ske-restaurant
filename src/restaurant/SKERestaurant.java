@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * OrderTaker class get data by calling method from RestaurantManager.
+ * SKERestaurant class get data by calling method from RestaurantManager.
  * Take order from user and save in salesLogs file.
  * Print total order.
  * @author Supaluk Jaroensuk
