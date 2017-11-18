@@ -31,6 +31,7 @@ public class RestaurantManager {
         init();
         return price;
     }
+
     /**
      * Set a menu read from a menu file and add to the array of menu and price.
      * @param fileMenu is a filename of menu file.

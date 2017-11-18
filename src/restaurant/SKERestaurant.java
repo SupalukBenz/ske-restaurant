@@ -16,7 +16,6 @@ public class SKERestaurant {
 
     private static String[] menu = RestaurantManager.getMenuItems();
     private static double[] price = RestaurantManager.getPrice();
-
     final static Scanner scan = new Scanner(System.in);
     static int latestNumber = RestaurantManager.getLatestOrderNumber();
 
